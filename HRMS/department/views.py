@@ -1,5 +1,5 @@
 from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout
+from django.contrib.auth import authenticate, login, logout, regsiter
 from django.contrib.auth.decorators import login_required
 from .models import Department
 from .forms import DepartmentForm
@@ -21,6 +21,12 @@ def login_view(request):
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'core/login.html')
+
+
+
+def register(request):
+    
+
 
 @login_required
 def logout_view(request):

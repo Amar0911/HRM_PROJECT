@@ -1,8 +1,10 @@
 {% extends "core/index.html" %}
 
 {% block css %}
+
 <style>
-    /* Global Styles */
+    
+
     body {
         font-family: 'Arial', sans-serif;
         background-color: #f4f6f9;
@@ -10,7 +12,7 @@
         padding: 0;
     }
 
-    /* Logout button at top right */
+    
     #logout {
         position: absolute;
         top: 20px;
@@ -39,7 +41,8 @@
         outline: none;
     }
 
-    /* Dashboard Styles */
+   
+
     #dashboard {
         margin-top: 80px;
         font-family: 'Arial', sans-serif;
@@ -60,11 +63,15 @@
         font-weight: 600;
     }
 
-    /* Add Department Button */
+    
+    .add-department-wrapper {
+        display: flex;
+        justify-content: center;
+        margin-top: 40px; /* Space from the table */
+    }
+
     .add-department-link {
-        display: inline-block;
-        margin-bottom: 20px;
-        padding: 12px 18px;
+        padding: 12px 24px; /* Adjust button padding */
         background-color: #1e88e5; /* Blue */
         color: white;
         text-decoration: none;
@@ -79,7 +86,8 @@
         transform: scale(1.05);
     }
 
-    /* Department Table Styles */
+    
+
     .department-table {
         width: 100%;
         border-collapse: collapse;
@@ -94,7 +102,7 @@
     }
 
     .department-table th {
-        background-color: #1e88e5; /* Blue */
+        background-color: #1e88e5; 
         color: white;
         font-size: 1.1rem;
     }
@@ -108,7 +116,7 @@
         background-color: #f1f1f1;
     }
 
-    /* Edit & Delete Links */
+
     .edit-link,
     .delete-link {
         padding: 6px 12px;
@@ -140,6 +148,7 @@
     }
 
     /* Responsive Adjustments */
+
     @media (max-width: 768px) {
         #dashboard {
             padding: 20px;
@@ -169,16 +178,8 @@
 
 {% block content %}
 
-<!-- Logout button positioned at the top-right -->
-<div id="logout">
-    <a href="{% url 'logout' %}">
-        <button type="button">Logout</button>
-    </a>
-</div>
-
 <div id="dashboard">
     <h1>Dashboard</h1>
-    <a href="{% url 'add_department' %}" class="add-department-link">Add Department</a>
     <table class="department-table">
         <thead>
             <tr>
@@ -197,7 +198,7 @@
                         <a href="{% url 'update_department' department.id %}" class="edit-link">Edit</a>
                         <a href="{% url 'delete_department' department.id %}" class="delete-link">Delete</a>
                     </td>
-                </tr> 
+                </tr>
                 {% endfor %}
             {% else %}
                 <tr>
@@ -206,6 +207,12 @@
             {% endif %}
         </tbody>
     </table>
+
+
+    <div class="add-department-wrapper">
+        <a href="{% url 'add_department' %}" class="add-department-link">Add Department</a>
+    </div>
 </div>
+
 
 {% endblock content %}

@@ -2,23 +2,34 @@
 
 {% block css %}
 <style>
-    #add-department {
+    /* Global Styles */
+    body {
         font-family: 'Arial', sans-serif;
-        padding: 30px;
-        background-color: #f9f9f9;
-        border-radius: 8px;
-        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
-        max-width: 600px;
-        margin: 0 auto;
+        background-color: #f0f2f5;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Add Department Container */
+    #add-department {
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0 6px 20px rgba(0, 0, 0, 0.1);
+        max-width: 700px;
+        margin: 50px auto;
+        background: linear-gradient(145deg, #e0f7fa, #ffffff);
     }
 
     #add-department h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: #333;
         margin-bottom: 20px;
         text-align: center;
+        font-weight: 600;
     }
 
+    /* Form Styles */
     #add-department form {
         display: flex;
         flex-direction: column;
@@ -27,19 +38,22 @@
     #add-department form label {
         font-size: 1rem;
         color: #333;
-        margin-bottom: 5px;
+        margin-bottom: 8px;
+        font-weight: 500;
     }
 
+    /* Input, Select, and Textarea Styles */
     #add-department form input,
     #add-department form select,
     #add-department form textarea {
-        padding: 12px;
-        margin-bottom: 15px;
+        padding: 14px;
+        margin-bottom: 18px;
         border: 1px solid #ddd;
-        border-radius: 5px;
+        border-radius: 8px;
         font-size: 1rem;
         width: 100%;
         box-sizing: border-box;
+        transition: border-color 0.3s ease, box-shadow 0.3s ease;
     }
 
     #add-department form input:focus,
@@ -47,6 +61,7 @@
     #add-department form textarea:focus {
         outline: none;
         border-color: #4CAF50;
+        box-shadow: 0 0 8px rgba(76, 175, 80, 0.3);
     }
 
     #add-department form textarea {
@@ -54,33 +69,47 @@
         min-height: 120px;
     }
 
+    /* Submit Button Styles */
     #add-department form button {
-        padding: 12px 20px;
+        padding: 14px 24px;
         background-color: #4CAF50;
         color: white;
         border: none;
-        border-radius: 5px;
+        border-radius: 8px;
         font-size: 1.1rem;
         cursor: pointer;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
 
     #add-department form button:hover {
         background-color: #45a049;
+        transform: scale(1.05);
     }
 
+    #add-department form button:active {
+        background-color: #388e3c;
+        transform: scale(1);
+    }
+
+    /* Back Link Styling */
     #add-department a {
         text-align: center;
         display: inline-block;
-        margin-top: 20px;
-        font-size: 1rem;
+        margin-top: 25px;
+        font-size: 1.1rem;
         color: #4CAF50;
         text-decoration: none;
         transition: color 0.3s ease;
+        font-weight: 500;
     }
 
     #add-department a:hover {
         color: #45a049;
+    }
+
+    #add-department a:focus {
+        outline: none;
     }
 </style>
 {% endblock css %}

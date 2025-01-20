@@ -1,8 +1,118 @@
 {% extends "core/index.html" %}
 
-{% block css %}{% endblock css %}
+{% block css %}
+<style>
+    /* Global Styles */
+    body {
+        font-family: 'Arial', sans-serif;
+        background-color: #f2f2f2;
+        margin: 0;
+        padding: 0;
+    }
+
+    /* Deactivate Department Container */
+    #deactivate-department {
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 15px;
+        box-shadow: 0 12px 25px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 80px auto;
+        text-align: center;
+        background: linear-gradient(145deg, #ffcc00, #fff); /* Subtle Yellow Gradient */
+    }
+
+    #deactivate-department h1 {
+        font-size: 2.5rem;
+        color: #333;
+        margin-bottom: 20px;
+        font-weight: 600;
+    }
+
+    #deactivate-department p {
+        font-size: 1.1rem;
+        color: #555;
+        margin-bottom: 30px;
+        line-height: 1.6;
+    }
+
+    /* Form Styles */
+    #deactivate-department form {
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+    }
+
+    #deactivate-department form button {
+        padding: 14px 30px;
+        background-color: #e53935; /* Red */
+        color: white;
+        border: none;
+        border-radius: 50px;
+        font-size: 1.2rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+        margin-bottom: 20px;
+        width: 100%;
+        max-width: 200px;
+    }
+
+    #deactivate-department form button:hover {
+        background-color: #c62828; /* Darker Red */
+        transform: scale(1.05);
+    }
+
+    #deactivate-department form button:active {
+        background-color: #b71c1c;
+        transform: scale(1);
+    }
+
+    /* Cancel Link Styles */
+    #deactivate-department a {
+        font-size: 1.1rem;
+        color: #4CAF50;
+        text-decoration: none;
+        transition: color 0.3s ease;
+        font-weight: 500;
+        margin-top: 20px;
+    }
+
+    #deactivate-department a:hover {
+        color: #388e3c;
+    }
+
+    #deactivate-department a:focus {
+        outline: none;
+    }
+
+    /* Responsive Design */
+    @media (max-width: 768px) {
+        #deactivate-department {
+            padding: 30px;
+            margin: 40px auto;
+        }
+
+        #deactivate-department h1 {
+            font-size: 2rem;
+        }
+
+        #deactivate-department p {
+            font-size: 1rem;
+        }
+
+        #deactivate-department form button {
+            padding: 12px 24px;
+            font-size: 1.1rem;
+        }
+    }
+</style>
+{% endblock css %}
+
 {% block title %}{{block.super}}Delete{% endblock title %}
+
 {% block content %}
+<div id="deactivate-department">
     <h1>Deactivate Department</h1>
     <p>
         Are you sure you want to deactivate the department "{{ department.name }}"? 
@@ -13,5 +123,5 @@
         <button type="submit">Confirm</button>
     </form>
     <a href="{% url 'dashboard' %}">Cancel</a>
-
+</div>
 {% endblock content %}

@@ -2,97 +2,179 @@
 
 {% block css %}
 <style>
-    #dashboard {
+    /* Global Styles */
+    body {
         font-family: 'Arial', sans-serif;
-        padding: 20px;
-        background-color: #fff;
-        border-radius: 8px;
-        box-shadow: 0px 2px 8px rgba(255, 255, 255, 0.1);
+        background-color: #f4f6f9;
+        margin: 0;
+        padding: 0;
     }
-    
+
+    /* Logout button at top right */
+    #logout {
+        position: absolute;
+        top: 20px;
+        right: 20px;
+        z-index: 1000;
+    }
+
+    #logout button {
+        padding: 12px 24px;
+        background-color: #1e88e5; /* Blue */
+        color: white;
+        border: none;
+        border-radius: 30px;
+        font-size: 1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease, transform 0.2s ease;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
+    }
+
+    #logout button:hover {
+        background-color: #1565c0; /* Darker Blue */
+        transform: scale(1.05);
+    }
+
+    #logout button:focus {
+        outline: none;
+    }
+
+    /* Dashboard Styles */
+    #dashboard {
+        margin-top: 80px;
+        font-family: 'Arial', sans-serif;
+        padding: 40px;
+        background-color: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0px 6px 20px rgba(0, 0, 0, 0.1);
+        max-width: 1200px;
+        margin-left: auto;
+        margin-right: auto;
+    }
+
     #dashboard h1 {
-        font-size: 2rem;
+        font-size: 2.5rem;
         color: #333;
-        margin-bottom: 20px;
+        margin-bottom: 25px;
         text-align: center;
+        font-weight: 600;
     }
-    
+
+    /* Add Department Button */
     .add-department-link {
         display: inline-block;
         margin-bottom: 20px;
-        padding: 10px 15px;
-        background-color: #4CAF50;
+        padding: 12px 18px;
+        background-color: #1e88e5; /* Blue */
         color: white;
         text-decoration: none;
-        border-radius: 5px;
+        border-radius: 30px;
         font-size: 1.1rem;
-        transition: background-color 0.3s ease;
+        transition: background-color 0.3s ease, transform 0.3s ease;
+        box-shadow: 0 6px 12px rgba(0, 0, 0, 0.1);
     }
-    
+
     .add-department-link:hover {
-        background-color: #45a049;
+        background-color: #1565c0; /* Darker Blue */
+        transform: scale(1.05);
     }
-    
+
+    /* Department Table Styles */
     .department-table {
         width: 100%;
         border-collapse: collapse;
         margin-top: 20px;
     }
-    
+
     .department-table th,
     .department-table td {
-        padding: 12px;
+        padding: 15px;
         text-align: left;
         border-bottom: 1px solid #ddd;
     }
-    
+
     .department-table th {
-        background-color: #4CAF50;
+        background-color: #1e88e5; /* Blue */
         color: white;
+        font-size: 1.1rem;
+    }
+
+    .department-table td {
+        background-color: #f9f9f9;
         font-size: 1rem;
     }
-    
-    .department-table td {
-        background-color: #fff;
-    }
-    
+
     .department-table tr:hover {
-        background-color:rgb(179, 178, 178);
+        background-color: #f1f1f1;
     }
-    
+
+    /* Edit & Delete Links */
     .edit-link,
     .delete-link {
-        padding: 5px 10px;
-        margin-right: 8px;
-        border-radius: 5px;
+        padding: 6px 12px;
+        margin-right: 10px;
+        border-radius: 30px;
         text-decoration: none;
-        font-size: 0.9rem;
+        font-size: 1rem;
+        transition: background-color 0.3s ease, transform 0.2s ease;
     }
-    
+
     .edit-link {
-        background-color: #4CAF50;
+        background-color: #1e88e5; /* Blue */
         color: white;
     }
-    
+
     .edit-link:hover {
-        background-color: #45a049;
+        background-color: #1565c0; /* Darker Blue */
+        transform: scale(1.05);
     }
-    
+
     .delete-link {
-        background-color: #f44336;
+        background-color: #f44336; /* Red */
         color: white;
     }
-    
+
     .delete-link:hover {
-        background-color: #e53935;
+        background-color: #e53935; /* Darker Red */
+        transform: scale(1.05);
     }
-    
+
+    /* Responsive Adjustments */
+    @media (max-width: 768px) {
+        #dashboard {
+            padding: 20px;
+        }
+
+        #dashboard h1 {
+            font-size: 2rem;
+        }
+
+        .add-department-link {
+            font-size: 1rem;
+            padding: 10px 15px;
+        }
+
+        .department-table th, .department-table td {
+            padding: 10px;
+        }
+
+        .edit-link, .delete-link {
+            font-size: 0.9rem;
+        }
+    }
 </style>
 {% endblock css %}
 
 {% block title %}{{block.super}}Home{% endblock title %}
 
 {% block content %}
+
+<!-- Logout button positioned at the top-right -->
+<div id="logout">
+    <a href="{% url 'logout' %}">
+        <button type="button">Logout</button>
+    </a>
+</div>
 
 <div id="dashboard">
     <h1>Dashboard</h1>
@@ -125,4 +207,5 @@
         </tbody>
     </table>
 </div>
+
 {% endblock content %}

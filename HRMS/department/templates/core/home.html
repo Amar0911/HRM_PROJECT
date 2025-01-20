@@ -1,0 +1,128 @@
+{% extends "core/index.html" %}
+
+{% block css %}
+<style>
+    #dashboard {
+        font-family: 'Arial', sans-serif;
+        padding: 20px;
+        background-color: #fff;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(255, 255, 255, 0.1);
+    }
+    
+    #dashboard h1 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+    
+    .add-department-link {
+        display: inline-block;
+        margin-bottom: 20px;
+        padding: 10px 15px;
+        background-color: #4CAF50;
+        color: white;
+        text-decoration: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        transition: background-color 0.3s ease;
+    }
+    
+    .add-department-link:hover {
+        background-color: #45a049;
+    }
+    
+    .department-table {
+        width: 100%;
+        border-collapse: collapse;
+        margin-top: 20px;
+    }
+    
+    .department-table th,
+    .department-table td {
+        padding: 12px;
+        text-align: left;
+        border-bottom: 1px solid #ddd;
+    }
+    
+    .department-table th {
+        background-color: #4CAF50;
+        color: white;
+        font-size: 1rem;
+    }
+    
+    .department-table td {
+        background-color: #fff;
+    }
+    
+    .department-table tr:hover {
+        background-color:rgb(179, 178, 178);
+    }
+    
+    .edit-link,
+    .delete-link {
+        padding: 5px 10px;
+        margin-right: 8px;
+        border-radius: 5px;
+        text-decoration: none;
+        font-size: 0.9rem;
+    }
+    
+    .edit-link {
+        background-color: #4CAF50;
+        color: white;
+    }
+    
+    .edit-link:hover {
+        background-color: #45a049;
+    }
+    
+    .delete-link {
+        background-color: #f44336;
+        color: white;
+    }
+    
+    .delete-link:hover {
+        background-color: #e53935;
+    }
+    
+</style>
+{% endblock css %}
+
+{% block title %}{{block.super}}Home{% endblock title %}
+
+{% block content %}
+
+<div id="dashboard">
+    <h1>Dashboard</h1>
+    <a href="{% url 'add_department' %}" class="add-department-link">Add Department</a>
+    <table class="department-table">
+        <thead>
+            <tr>
+                <th>Name</th>
+                <th>Description</th>
+                <th>Status</th>
+            </tr>
+        </thead>
+        <tbody>
+            {% if departments %}
+                {% for department in departments %}
+                <tr>
+                    <td>{{ department.Dept_Name }}</td>
+                    <td>{{ department.Description }}</td>
+                    <td>
+                        <a href="{% url 'update_department' department.id %}" class="edit-link">Edit</a>
+                        <a href="{% url 'delete_department' department.id %}" class="delete-link">Delete</a>
+                    </td>
+                </tr> 
+                {% endfor %}
+            {% else %}
+                <tr>
+                    <td colspan="3" style="text-align: center;">No Data Available</td>
+                </tr>
+            {% endif %}
+        </tbody>
+    </table>
+</div>
+{% endblock content %}

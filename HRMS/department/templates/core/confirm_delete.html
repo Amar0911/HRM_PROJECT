@@ -1,0 +1,17 @@
+{% extends "core/index.html" %}
+
+{% block css %}{% endblock css %}
+{% block title %}{{block.super}}Delete{% endblock title %}
+{% block content %}
+    <h1>Deactivate Department</h1>
+    <p>
+        Are you sure you want to deactivate the department "{{ department.name }}"? 
+        <br> Please ensure no employees are linked to this department before deactivating.
+    </p>
+    <form method="post">
+        {% csrf_token %}
+        <button type="submit">Confirm</button>
+    </form>
+    <a href="{% url 'dashboard' %}">Cancel</a>
+
+{% endblock content %}

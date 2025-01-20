@@ -1,0 +1,108 @@
+{% extends "core/index.html" %}
+
+{% block css %}
+<style>
+    #add-department {
+        font-family: 'Arial', sans-serif;
+        padding: 30px;
+        background-color: #f9f9f9;
+        border-radius: 8px;
+        box-shadow: 0px 2px 8px rgba(0, 0, 0, 0.1);
+        max-width: 600px;
+        margin: 0 auto;
+    }
+
+    #add-department h1 {
+        font-size: 2rem;
+        color: #333;
+        margin-bottom: 20px;
+        text-align: center;
+    }
+
+    #add-department form {
+        display: flex;
+        flex-direction: column;
+    }
+
+    #add-department form label {
+        font-size: 1rem;
+        color: #333;
+        margin-bottom: 5px;
+    }
+
+    #add-department form input,
+    #add-department form select,
+    #add-department form textarea {
+        padding: 12px;
+        margin-bottom: 15px;
+        border: 1px solid #ddd;
+        border-radius: 5px;
+        font-size: 1rem;
+        width: 100%;
+        box-sizing: border-box;
+    }
+
+    #add-department form input:focus,
+    #add-department form select:focus,
+    #add-department form textarea:focus {
+        outline: none;
+        border-color: #4CAF50;
+    }
+
+    #add-department form textarea {
+        resize: vertical;
+        min-height: 120px;
+    }
+
+    #add-department form button {
+        padding: 12px 20px;
+        background-color: #4CAF50;
+        color: white;
+        border: none;
+        border-radius: 5px;
+        font-size: 1.1rem;
+        cursor: pointer;
+        transition: background-color 0.3s ease;
+    }
+
+    #add-department form button:hover {
+        background-color: #45a049;
+    }
+
+    #add-department a {
+        text-align: center;
+        display: inline-block;
+        margin-top: 20px;
+        font-size: 1rem;
+        color: #4CAF50;
+        text-decoration: none;
+        transition: color 0.3s ease;
+    }
+
+    #add-department a:hover {
+        color: #45a049;
+    }
+</style>
+{% endblock css %}
+
+{% block title %}{{block.super}}Add{% endblock title %}
+
+{% block content %}
+<div id="add-department">
+    <h1>Add Department</h1>
+    <form method="post">
+        {% csrf_token %}
+        
+        <!-- Department Name -->
+        <label for="id_name">Department Name</label>
+        {{ form.Dept_Name }}
+        
+        <!-- Department Description -->
+        <label for="id_description">Department Description</label>
+        {{ form.Description }}
+
+        <button type="submit">Add</button>
+    </form>
+    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
+</div>
+{% endblock content %}

@@ -1,0 +1,13 @@
+{% extends "core/index.html" %}
+{% block title %}{{block.super}}Home{% endblock title %}
+{% block css %}{% endblock css %}
+{% block content%}
+<h1>Update Department</h1>
+<form method="post">
+    {% csrf_token %}
+    {{ form.as_p }}
+    <button type="submit">Update</button>
+</form>
+<a href="{% url 'dashboard' %}">Back to Dashboard</a>
+
+{% endblock content%}

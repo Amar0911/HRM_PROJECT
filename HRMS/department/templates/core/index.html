@@ -1,16 +1,27 @@
 <!DOCTYPE html>
+{% load static %}
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>{% block title %}HRMS| {% endblock title %}</title>
-    {% block css %}{% endblock css %}
+    <!--Bootstrap-->
+    <link rel="stylesheet" href="{% static "core/css/bootstrap.min.css" %}">
+    <!--font awesome-->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.6.0/css/all.min.css">
+    <!--core css-->
+    <link rel="stylesheet" href="{% static "core/css/core.css" %}">
 </head>
 <body>
     {% block content %}
     
     
+    
 
     {% endblock content %}
+
+    <script src="{% static "core/js/jquery.js" %}"></script>
+    <script src="{% static "core/js/popper.js" %}"></script>
+    <script src="{% static "core/js/bootstrap.min.js" %}"></script>
 </body>
 </html>

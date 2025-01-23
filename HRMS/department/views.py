@@ -1,38 +1,65 @@
-from django.shortcuts import render, redirect, get_object_or_404
-from django.contrib.auth import authenticate, login, logout, regsiter
+from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
-from .models import Department
-from .forms import DepartmentForm
+from django.contrib.auth.models import User
 from django.contrib import messages
+from .models import Department
+from .forms import DepartmentForm,RegisterForm
+from django.shortcuts import render, redirect,get_object_or_404
+
+
+
+
+def register(request):
+    if request.method == 'POST':
+        reg=RegisterForm(request.POST)
+        if reg.is_valid():
+            reg.save()
+            messages.success(request,'Registration Successfully !!')
+            return redirect('login')
+    else:
+        reg=RegisterForm()
+    return render(request,'core/register.html',{'reg':reg})
+
+
+
+
 
 def login_view(request):
     if request.method == 'POST':
         username = request.POST['username']
         password = request.POST['password']
         user = authenticate(request, username=username, password=password)
+        
         if user is not None:
             login(request, user)
             if user.is_superuser:
                 messages.success(request, 'Login successful. Welcome to the Dashboard!')
                 return redirect('dashboard')  
             else:
-                messages.error(request, 'Only admins can access the dashboard.')
-                return redirect('login')  
+                messages.success(request, 'Login successful. Welcome to the dashboard!')
+                return redirect('user_dashboard') 
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'core/login.html')
 
 
 
-def register(request):
-    
+
+
+def home(request):
+    return render(request,'core/home.html')
+
+
+
 
 
 @login_required
 def logout_view(request):
     logout(request)
-    messages.success(request, 'You have logged out successfully.')
-    return redirect('login')  
+    return redirect('home')
+
+
+
 
 
 @login_required
@@ -41,7 +68,23 @@ def dashboard(request):
         messages.error(request, 'Access restricted to administrators.')
         return redirect('login')
     departments = Department.objects.filter(status=True)
-    return render(request, 'core/home.html', {'departments': departments})
+    return render(request, 'core/admin_dashboard.html', {'departments': departments})
+
+
+
+
+@login_required
+def user_dashboard(request):
+    
+    user_data = Department.objects.filter(status=True)
+    if not user_data.exists():
+        messages.error(request, 'No data found for your account.')
+        return redirect('login')  
+
+    return render(request, 'core/user_deshboard.html', {'user_data': user_data})
+
+
+
 
 @login_required
 def add_department(request):
@@ -57,6 +100,10 @@ def add_department(request):
         form = DepartmentForm()
     return render(request, 'core/add_department.html', {'form': form})
 
+
+
+
+
 @login_required
 def delete_department(request, id):
     department = get_object_or_404(Department, pk=id)
@@ -66,6 +113,9 @@ def delete_department(request, id):
         messages.success(request, f'Department "{department.Dept_Name}" deactivated successfully.')
         return redirect('dashboard')
     return render(request, 'core/confirm_delete.html', {'department': department})
+
+
+
 
 @login_required
 def update_department(request, id):

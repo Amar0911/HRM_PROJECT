@@ -36,11 +36,12 @@ def login_view(request):
                 messages.success(request, 'Login successful. Welcome to the Dashboard!')
                 return redirect('dashboard')  
             else:
-                messages.success(request, 'Login successful. Welcome to the dashboard!')
+                messages.success(request, 'Login successful. Welcome to the Dashboard!')
                 return redirect('user_dashboard') 
         else:
             messages.error(request, 'Invalid username or password.')
     return render(request, 'core/login.html')
+
 
 
 
@@ -74,14 +75,8 @@ def dashboard(request):
 
 
 @login_required
-def user_dashboard(request):
-    
-    user_data = Department.objects.filter(status=True)
-    if not user_data.exists():
-        messages.error(request, 'No data found for your account.')
-        return redirect('login')  
-
-    return render(request, 'core/user_deshboard.html', {'user_data': user_data})
+def user_dashboard(request): 
+    return render(request, 'core/user_deshboard.html')
 
 
 

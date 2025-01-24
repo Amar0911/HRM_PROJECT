@@ -76,24 +76,13 @@ WSGI_APPLICATION = 'HRMS.wsgi.application'
 
 
 
-# DATABASES = {
-#     'default': {
-#         'ENGINE': 'django.db.backends.mysql',
-#         'NAME': 'Amarshankargupta$hrms',
-#         'USER': 'Amarshankargupta',
-#         'PASSWORD': 'Asd@fgh789',
-#         'HOST': 'Amarshankargupta.mysql.pythonanywhere-services.com',  
-#         'PORT': '3306',     
-#     }
-# }
-
 DATABASES = {
     'default': {
         'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'HRMS',
-        'USER': 'root',
-        'PASSWORD': 'root',
-        'HOST': 'Localhost',  
+        'NAME': 'Amarshankargupta$hrms',
+        'USER': 'Amarshankargupta',
+        'PASSWORD': 'Asd@fgh789',
+        'HOST': 'Amarshankargupta.mysql.pythonanywhere-services.com',  
         'PORT': '3306',     
     }
 }
@@ -136,33 +125,22 @@ USE_TZ = True
 # https://docs.djangoproject.com/en/5.1/howto/static-files/
 
 STATIC_URL = '/static/'
-# STATICFILES_DIRS = [BASE_DIR / "static"]
-# STATIC_ROOT = BASE_DIR / 'staticfiles'
+STATICFILES_DIRS = [BASE_DIR / "static"]
+STATIC_ROOT = BASE_DIR / 'staticfiles'
 
 MEDIA_URL = '/media/'
 MEDIA_ROOT = BASE_DIR / 'media'
-# SECURE_SSL_REDIRECT = False
-SESSION_COOKIE_SECURE = False
-CSRF_COOKIE_SECURE = False
-SECURE_SSL_REDIRECT = False
 
-# SECURE_SSL_REDIRECT = True
-# SECURE_HSTS_SECONDS = 3600
-# SECURE_HSTS_INCLUDE_SUBDOMAINS = True
-# SECURE_HSTS_PRELOAD = True
-# SECURE_BROWSER_XSS_FILTER = True
-# SECURE_CONTENT_TYPE_NOSNIFF = True
-# SESSION_COOKIE_SECURE = True
-# CSRF_COOKIE_SECURE = True
+SECURE_SSL_REDIRECT = True
+SECURE_HSTS_SECONDS = 3600
+SECURE_HSTS_INCLUDE_SUBDOMAINS = True
+SECURE_HSTS_PRELOAD = True
+SECURE_BROWSER_XSS_FILTER = True
+SECURE_CONTENT_TYPE_NOSNIFF = True
+SESSION_COOKIE_SECURE = True
+CSRF_COOKIE_SECURE = True
 
 # Default primary key field type
 # https://docs.djangoproject.com/en/5.1/ref/settings/#default-auto-field
 
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
-
-
-
-# Hashed password: pbkdf2_sha256$390000$AbcDeFgH12345$X6Po2iwmG5J5yUql5xVJcA0Ve4MN+6QXyy+cJeUkasw=
-
-# INSERT INTO auth_user (password, last_login, is_superuser, username, first_name, last_name, email, is_staff, is_active, date_joined) 
-# VALUES ('pbkdf2_sha256$390000$AbcDeFgH12345$X6Po2iwmG5J5yUql5xVJcA0Ve4MN+6QXyy+cJeUkasw=', NULL, 1, 'Amar123', 'Amar', 'Gupta', 'guptaamar0911@gmail.com', 1, 1, NOW());

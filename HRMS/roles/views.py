@@ -53,7 +53,7 @@ def assign_role(request):
     if request.method == 'POST':
         form = UserRoleForm(request.POST)
         if form.is_valid():
-            form.save()
+            form.save()  
             return redirect('role_list')
     else:
         form = UserRoleForm()

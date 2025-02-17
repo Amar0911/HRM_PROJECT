@@ -9,6 +9,48 @@
         body {
             background-color: #f8f9fa;
         }
+
+
+        .navbar {
+            background-color:rgb(101, 231, 233);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 5px;
+        }
+
+        .navbar a {
+            color: black;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color:rgb(11, 11, 11);
+        }
+
+        .btn-logout {
+            background-color: #dc3545;
+            padding: 8px 15px;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: background 0.3s ease-in-out, transform 0.2s;
+            font-weight: bold;
+        }
+
+        .btn-logout:hover {
+            background-color: #c82333;
+            transform: translateY(-2px);
+        }
+
+
         .container {
             max-width: 600px;
             background: #fff;
@@ -17,37 +59,63 @@
             box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
             margin-top: 50px;
         }
+
+
         h2 {
             text-align: center;
             margin-bottom: 20px;
             color: #343a40;
         }
+
+
         .form-control {
             border-radius: 5px;
             height: 45px;
         }
+
+
         textarea.form-control {
             height: auto;
         }
+
+
         .form-check {
             margin-bottom: 5px;
         }
+
+
         .btn-container {
             display: flex;
             justify-content: center;
             gap: 10px;
         }
-        /* Styling for Django Messages */
+
+
+       
         .alert {
             padding: 10px;
             border-radius: 5px;
             margin-bottom: 10px;
         }
+
     </style>
+
 </head>
 <body>
+
+    <div class="navbar">
+        <div>
+            <a href="{% url "index" %}">HRMS</a>
+        </div>
+        <div>
+            <a href="{% url 'logout' %}" class="btn-logout">Logout</a>
+        </div>
+    </div>
+
+    
+    
     <div class="container">
-        <!-- Messages -->
+        <!-- Django Messages -->
         {% for message in messages %}
             <div class="alert alert-info text-center">{{ message }}</div>
         {% endfor %}

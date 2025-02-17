@@ -1,10 +1,9 @@
-
 <!DOCTYPE html>
 <html lang="en">
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Login</title>
+    <title>Update Department</title>
     <style>
         /* Reset & Global Styles */
         * {
@@ -15,19 +14,20 @@
         }
 
         body {
-            background-color: #f4f4f4;
+            background-color: #f8f9fa;
             display: flex;
             justify-content: center;
             align-items: center;
             height: 100vh;
+            padding: 20px;
         }
 
-        .login-container {
+        .container {
             background: white;
             padding: 25px;
             border-radius: 10px;
             box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
-            width: 350px;
+            width: 400px;
             text-align: center;
         }
 
@@ -36,15 +36,28 @@
             margin-bottom: 15px;
         }
 
+        /* Django Messages Styling */
         .message {
-            color: red;
-            font-size: 14px;
+            background: #d4edda;
+            color: #155724;
+            padding: 10px;
+            border-radius: 5px;
             margin-bottom: 10px;
+            border: 1px solid #c3e6cb;
+            text-align: center;
         }
 
-        input {
+        form {
+            text-align: left;
+        }
+
+        label {
+            font-weight: bold;
+        }
+
+        input, select, textarea {
             width: 100%;
-            padding: 10px;
+            padding: 8px;
             margin: 10px 0;
             border: 1px solid #ccc;
             border-radius: 5px;
@@ -67,20 +80,6 @@
             background-color: #0056b3;
         }
 
-        .register-link {
-            margin-top: 15px;
-            font-size: 14px;
-        }
-
-        .register-link a {
-            color: #007BFF;
-            text-decoration: none;
-        }
-
-        .register-link a:hover {
-            text-decoration: underline;
-        }
-
         /* Back Button */
         .back-btn {
             display: block;
@@ -91,7 +90,6 @@
             border: 1px solid #007BFF;
             padding: 8px 12px;
             border-radius: 5px;
-            width: 100%;
             text-align: center;
         }
 
@@ -104,22 +102,21 @@
 </head>
 <body>
 
-    <div class="login-container">
-        <h2>Login</h2>
+    <div class="container">
+        <h2>Update Department</h2>
         
         {% for message in messages %}
             <p class="message">{{ message }}</p>
         {% endfor %}
 
-        <form method="POST">
+        <form method="post">
             {% csrf_token %}
-            <input type="text" name="username" placeholder="Username">
-            <input type="password" name="password" placeholder="Password">
-            <button type="submit">Login</button>
+            {{ form.as_p }}
+            <button type="submit">Update</button>
         </form>
-        
+
         <!-- Back Button -->
-        <a href="{% url "index" %}" class="back-btn">← Back</a>
+        <a href="{% url 'department_dashboard' %}" class="back-btn">← Back</a>
         
     </div>
 

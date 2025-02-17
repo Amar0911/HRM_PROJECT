@@ -1,186 +1,155 @@
-{% extends "core/index.html" %}
-
-{% block content %}
-<style>
-    /* General Styles */
-    body {
-        font-family: 'Arial', sans-serif;
-        background-color: #f4f4f9;
-        margin: 0;
-        padding: 0;
-        color: #333;
-    }
-
-    #add-department {
-        background-color: white;
-        margin: 50px auto;
-        padding: 30px;
-        border-radius: 10px;
-        width: 60%;
-        box-shadow: 0 10px 30px rgba(0, 0, 0, 0.1);
-        transition: box-shadow 0.3s ease-in-out;
-    }
-
-    #add-department:hover {
-        box-shadow: 0 15px 45px rgba(0, 0, 0, 0.15);
-    }
-
-    h1 {
-        font-size: 32px;
-        color: #333;
-        margin-bottom: 20px;
-        text-align: center;
-        font-weight: bold;
-    }
-
-    form {
-        display: flex;
-        flex-direction: column;
-        gap: 20px;
-    }
-
-    label {
-        font-size: 16px;
-        color: #555;
-        margin-bottom: 5px;
-    }
-
-    input[type="text"], textarea {
-        width: 100%;
-        padding: 12px;
-        font-size: 14px;
-        border: 1px solid #ddd;
-        border-radius: 8px;
-        transition: border 0.3s ease;
-    }
-
-    input[type="text"]:focus, textarea:focus {
-        border: 1px solid #007BFF;
-        outline: none;
-    }
-
-    button {
-        background-color: #007BFF;
-        color: white;
-        padding: 12px 20px;
-        font-size: 16px;
-        border-radius: 8px;
-        cursor: pointer;
-        border: none;
-        transition: background-color 0.3s ease, transform 0.3s ease;
-    }
-
-    button:hover {
-        background-color: #0056b3;
-        transform: translateY(-2px);
-    }
-
-    a {
-        text-decoration: none;
-        color: #007BFF;
-        font-size: 14px;
-        text-align: center;
-        display: block;
-        margin-top: 20px;
-        transition: text-decoration 0.3s ease;
-    }
-
-    a:hover {
-        text-decoration: underline;
-    }
-
-    ul {
-        list-style-type: none;
-        padding: 0;
-        margin: 0;
-        position: fixed;
-        top: 20px;
-        left: 50%;
-        transform: translateX(-50%);
-        z-index: 1000;
-        width: 80%;
-        max-width: 600px;
-    }
-
-    .message {
-        padding: 15px;
-        border-radius: 8px;
-        margin-bottom: 10px;
-        display: flex;
-        align-items: center;
-        gap: 15px;
-        font-size: 16px;
-        font-weight: 500;
-        text-align: center;
-        box-shadow: 0 5px 15px rgba(0, 0, 0, 0.1);
-    }
-
-    .message-success {
-        background-color: #d4edda;
-        color: #155724;
-        border: 1px solid #c3e6cb;
-    }
-
-    .message-error {
-        background-color: #f8d7da;
-        color: #721c24;
-        border: 1px solid #f5c6cb;
-    }
-
-    .message-info {
-        background-color: #cce5ff;
-        color: #004085;
-        border: 1px solid #b8daff;
-    }
-
-    .message-warning {
-        background-color: #fff3cd;
-        color: #856404;
-        border: 1px solid #ffeeba;
-    }
-
-    .message i {
-        font-size: 18px;
-    }
-
-    @media (max-width: 768px) {
-        ul {
-            width: 90%;
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Add Department</title>
+    <style>
+        /* Reset and Global Styles */
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
         }
 
-        .message {
-            font-size: 14px;
+        body {
+            background-color: #f8f9fa;
+        }
+
+        /* Navbar */
+        .navbar {
+            background-color: #007BFF;
+            padding: 15px;
+            text-align: center;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.1);
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: opacity 0.3s;
+        }
+
+        .navbar a:hover {
+            opacity: 0.8;
+        }
+
+        /* Container */
+        .container {
+            background: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            max-width: 500px;
+            margin: 60px auto;
+            text-align: center;
+        }
+
+        h2 {
+            color: #007BFF;
+            margin-bottom: 20px;
+            font-size: 22px;
+        }
+
+        /* Form Styling */
+        form {
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+
+        input, textarea, select {
+            width: 100%;
             padding: 12px;
+            border: 1px solid #ccc;
+            border-radius: 5px;
+            font-size: 15px;
+            transition: border 0.3s;
         }
-    }
-</style>
 
-{% if messages %}
-    <ul>
-        {% for message in messages %}
-            <li class="message message-{{ message.tags }}">
-                <i class="fas fa-exclamation-circle"></i> {{ message }}
-            </li>
-        {% endfor %}
-    </ul>
-{% endif %}
+        input:focus, textarea:focus, select:focus {
+            border-color: #007BFF;
+            outline: none;
+        }
 
-<div id="add-department">
-    <h1>Add Department</h1>
-    <form method="post">
-        {% csrf_token %}
-        
-        <!-- Department Name -->
-        <label for="id_name">Department Name</label>
-        {{ form.Dept_Name }}
-        
-        <!-- Department Description -->
-        <label for="id_description">Department Description</label>
-        {{ form.Description }}
+        textarea {
+            resize: vertical;
+        }
 
-        <button type="submit">Add</button>
-    </form>
-    <a href="{% url 'dashboard' %}">Back to Dashboard</a>
-</div>
+        /* Button Styling */
+        button {
+            background-color: #007BFF;
+            color: white;
+            padding: 12px;
+            border: none;
+            border-radius: 5px;
+            font-size: 16px;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.2s;
+        }
 
-{% endblock content %}
+        button:hover {
+            background-color: #0056b3;
+            transform: translateY(-2px);
+        }
+
+        /* Back Link */
+        .back-link {
+            display: inline-block;
+            margin-top: 15px;
+            text-decoration: none;
+            color: #007BFF;
+            font-size: 14px;
+            font-weight: bold;
+            transition: color 0.3s;
+        }
+
+        .back-link:hover {
+            color: #0056b3;
+            text-decoration: underline;
+        }
+
+        /* Messages */
+        .message {
+            background-color: #d4edda;
+            color: #155724;
+            padding: 12px;
+            border-radius: 5px;
+            margin: 15px auto;
+            width: 80%;
+            text-align: center;
+            border: 1px solid #c3e6cb;
+            font-size: 14px;
+        }
+    </style>
+</head>
+<body>
+
+    <!-- Navbar -->
+    <div class="navbar">
+        <a href="{% url 'department_dashboard' %}">🏢 Department Dashboard</a>
+    </div>
+
+    <!-- Messages -->
+    {% for message in messages %}
+        <p class="message">{{ message }}</p>
+    {% endfor %}
+
+    <!-- Main Content -->
+    <div class="container">
+        <h2>Add Department</h2>
+        <form method="post">
+            {% csrf_token %}
+            {{ form.as_p }}
+            <button type="submit">Save Department</button>
+        </form>
+        <a href="{% url 'department_dashboard' %}" class="back-link">← Back to Dashboard</a>
+    </div>
+
+</body>
+</html>

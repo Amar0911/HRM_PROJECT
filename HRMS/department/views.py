@@ -34,36 +34,37 @@ def register(request):
 
     return render(request, 'core/register.html')
 
+
+
 def user_login(request):
     if request.method == "POST":
         username = request.POST['username']
         password = request.POST['password']
+        
         user = authenticate(request, username=username, password=password)
 
         if user is not None:
             login(request, user)
             messages.success(request, "Login successful!")
-
-            # Check if user is an admin
             if user.is_staff:
                 return redirect('department_dashboard')
-
-            # Check if user has a role assigned
             user_role = UserRole.objects.filter(user=user).first()
             if user_role:
                 return redirect('user_dashboard')
             else:
                 messages.warning(request, "No role assigned. Please contact the admin.")
                 return redirect('no_role_page')  # Redirects to no_role.html
-
         else:
             messages.error(request, "Invalid username or password!")
-
+    
     return render(request, 'core/login.html')
+
 
 def user_logout(request):
     logout(request)
     return redirect('index')
+
+
 
 @login_required
 def user_dashboard(request):
@@ -78,6 +79,8 @@ def user_dashboard(request):
     user_permissions = user_role.permissions.all()
     return render(request, 'core/user_dashboard.html', {'user_role': user_role, 'user_permissions': user_permissions})
 
+
+
 # Dashboard View
 def department_dashboard(request):
     if not request.user.is_staff:
@@ -85,6 +88,8 @@ def department_dashboard(request):
         return redirect('index')
     departments = Department.objects.filter(status=True)
     return render(request, 'core/dashboard.html', {'departments': departments})
+
+
 
 # Create Department
 def add_department(request):
@@ -102,6 +107,8 @@ def add_department(request):
         form = DepartmentForm()
 
     return render(request, 'core/add_department.html', {'form': form})
+
+
 
 # Update Department
 def update_department(request, id):
@@ -122,6 +129,8 @@ def update_department(request, id):
 
     return render(request, 'core/update_department.html', {'form': form, 'department': department})
 
+
+
 # Soft Delete Department (Set Status to False)
 def delete_department(request, id):
     if not request.user.is_staff:
@@ -137,6 +146,8 @@ def delete_department(request, id):
         return redirect('department_dashboard')
 
     return render(request, 'core/confirm_delete.html', {'department': department})
+
+
 
 
 def no_role(request):

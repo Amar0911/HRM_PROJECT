@@ -27,8 +27,7 @@ def register(request):
             else:
                 user = User.objects.create_user(username=username, email=email, password=password)
                 user.save()
-                messages.success(request, "Registration successful! You can now login.")
-                return redirect('login')
+
         else:
             messages.error(request, "Passwords do not match!")
 
@@ -152,3 +151,6 @@ def delete_department(request, id):
 
 def no_role(request):
     return render(request, 'core/no_role.html', {'message': "No role assigned. Please contact the admin."})
+
+
+

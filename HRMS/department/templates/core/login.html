@@ -5,12 +5,32 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Login</title>
     <style>
-        /* Reset & Global Styles */
-        * {
-            margin: 0;
-            padding: 0;
-            box-sizing: border-box;
-            font-family: Arial, sans-serif;
+        .navbar {
+            background-color: rgb(101, 231, 233);
+            padding: 15px 20px;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            color: white;
+            box-shadow: 0px 4px 10px rgba(0, 0, 0, 0.1);
+            width: 100%;
+            position: fixed;
+            top: 0;
+            left: 0;
+            z-index: 1000;
+        }
+
+        .navbar a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            margin: 0 15px;
+            font-weight: bold;
+            transition: color 0.3s ease-in-out;
+        }
+
+        .navbar a:hover {
+            color: rgb(5, 7, 9);
         }
 
         body {
@@ -19,15 +39,18 @@
             justify-content: center;
             align-items: center;
             height: 100vh;
+            flex-direction: column;
+            margin: 0;
         }
 
         .login-container {
-            background: white;
+            background: rgba(242, 239, 231, 0.9);
             padding: 25px;
-            border-radius: 10px;
-            box-shadow: 2px 2px 10px rgba(0, 0, 0, 0.1);
+            border-radius: 15px;
+            box-shadow: 0px 0px 20px rgba(0, 0, 0, 0.7);
             width: 350px;
             text-align: center;
+            margin-top: 80px;
         }
 
         h2 {
@@ -42,70 +65,70 @@
         }
 
         input {
-            width: 100%;
-            padding: 10px;
-            margin: 10px 0;
-            border: 1px solid #ccc;
-            border-radius: 5px;
-            font-size: 14px;
+            width: 90%;
+            padding: 12px;
+            margin: 15px 0;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            {% comment %} background-color: rgba(114, 112, 112, 0.9); {% endcomment %}
+            color: white;
+            font-size: 16px;
+            transition: all 0.3s ease;
+        }
+
+        input:focus {
+            border-color: #007bff;
+            box-shadow: 0px 0px 5px rgba(0, 123, 255, 0.5);
+            outline: none;
+            background-color: #f0f8ff;
+            color: black;
         }
 
         button {
-            background-color: #007BFF;
+            width: 40%;
+            padding: 12px;
+            background: linear-gradient(0deg, #00bdff, #0079ff);
             color: white;
-            padding: 10px;
+            font-size: 18px;
+            font-weight: bold;
             border: none;
-            border-radius: 5px;
+            border-radius: 8px;
             cursor: pointer;
-            font-size: 16px;
-            width: 100%;
-            margin-top: 10px;
+            transition: background-color 0.3s;
+            animation: button-glow 1s linear infinite;
         }
 
         button:hover {
-            background-color: #0056b3;
+            background: linear-gradient(0deg, #0079ff, #0056b3);
         }
 
-        .register-link,
-        .reset-link {
+        @keyframes button-glow {
+            0% { background: linear-gradient(0deg, #00bdff, #0079ff); }
+            50% { background: linear-gradient(180deg, #0079ff, #00bdff); }
+            100% { background: linear-gradient(360deg, #00bdff, #0079ff); }
+        }
+
+        .forpass {
             margin-top: 15px;
-            font-size: 14px;
         }
 
-        .register-link a,
-        .reset-link a {
+        .forpass a {
             color: #007BFF;
             text-decoration: none;
         }
 
-        .register-link a:hover,
-        .reset-link a:hover {
+        .forpass a:hover {
             text-decoration: underline;
         }
-
-        /* Back Button */
-        .back-btn {
-            display: block;
-            margin-top: 15px;
-            font-size: 14px;
-            color: #007BFF;
-            text-decoration: none;
-            border: 1px solid #007BFF;
-            padding: 8px 12px;
-            border-radius: 5px;
-            width: 100%;
-            text-align: center;
-        }
-
-        .back-btn:hover {
-            background-color: #007BFF;
-            color: white;
-        }
-
     </style>
 </head>
 <body>
-
+    <div class="navbar">
+        <div>
+            <a href="{% url 'department_dashboard' %}">HRMS</a>
+        </div>
+    </div>
+    
     <div class="login-container">
         <h2>Login</h2>
         
@@ -120,12 +143,5 @@
             <button type="submit">Login</button>
         </form>
 
-       
-        
-        <!-- Back Button -->
-        <a href="{% url 'index' %}" class="back-btn">Back</a>
-        
-    </div>
-
-</body>
-</html>
+        <div class="forpass">
+            <a href="{% url 'forgotpassword' %}">Forgot Password?</a

@@ -38,7 +38,7 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'department',
-    'roles'
+    'roles',
 ]
 
 MIDDLEWARE = [
@@ -120,6 +120,16 @@ TIME_ZONE = 'UTC'
 USE_I18N = True
 
 USE_TZ = True
+
+#========================== Email Settings =================================
+
+EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'
+EMAIL_HOST = 'smtp.gmail.com'  
+EMAIL_PORT = 587  # SMTP port for TLS
+EMAIL_USE_TLS = True  # Use TLS for secure connection
+EMAIL_HOST_USER = 'movievistafilm@gmail.com'  
+EMAIL_HOST_PASSWORD = 'bsdw zxnz cvbw qyav'  
+DEFAULT_FROM_EMAIL = 'movievistafilm@gmail.com'  
 
 
 # Static files (CSS, JavaScript, Images)

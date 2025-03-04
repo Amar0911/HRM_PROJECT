@@ -108,7 +108,7 @@
                     {% for department in departments %}
                         <tr>
                             <td>{{ department.id }}</td>
-                            <td>{{ department.Dept_Name }}</td>
+                            <td>{{ department.dept_name }}</td>
                             <td>
                                 <a href="{% url 'update_department' department.id %}" class="btn btn-primary btn-sm">Modify</a>
                                 <a href="{% url 'delete_department' department.id %}" class="btn btn-danger btn-sm">Delete</a>

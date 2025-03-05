@@ -1,0 +1,161 @@
+<!--  Navbar -->
+<div class="navbar">
+    <div class="navbar-left">
+        <span id="Brand-name">Employee | Add</span>
+    </div>
+    <div class="navbar-right">
+        <a href="{% url 'employee_list' %}" class="btn-logout">Back</a>
+    </div>
+</div>
+
+<!--  Main Container -->
+<div class="container">
+    <div class="card shadow p-4 border-0 rounded bg-white">
+        <h2 class="text-center text-dark mb-4 fw-bold">Create Employee</h2>
+
+        <!--  Display Messages -->
+        {% if messages %}
+            {% for message in messages %}
+                <div class="alert alert-{{ message.tags }} text-center">
+                    <p class="mb-0 fw-semibold">{{ message }}</p>
+                </div>
+            {% endfor %}
+        {% endif %}
+
+        <!-- Employee Form -->
+        <form method="post" class="needs-validation" novalidate>
+            {% csrf_token %}
+        
+            <!-- Employee Name Field -->
+            {{ form.as_p }}  <!-- Renders the form fields properly -->
+        
+            
+            <!-- Action Buttons -->
+            <div class="d-flex justify-content-between">
+                <a href="{% url 'department_dashboard' %}" class="btn btn-secondary fw-semibold px-4">Back</a>
+                <button type="submit" class="btn btn-success fw-semibold px-4">Create Employee</button>
+            </div>
+        </form>
+    </div>
+</div>
+
+<!-- Styles -->
+<style>
+
+
+    body {
+        background-color: #f8f9fa;
+        font-family: 'Arial', sans-serif;
+    }
+
+    .navbar {
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+        background-color: #007bff;
+        padding: 15px 20px;
+        border-radius: 6px;
+        box-shadow: 0px 4px 8px rgba(0, 0, 0, 0.1);
+    }
+
+    #Brand-name {
+        font-size: 22px;
+        font-weight: bold;
+        color: white;
+    }
+
+    .btn-logout {
+        background-color: #ffffff;
+        color: #007bff;
+        font-weight: 600;
+        padding: 8px 16px;
+        border-radius: 6px;
+        text-decoration: none;
+        transition: 0.3s;
+    }
+
+    .btn-logout:hover {
+        background-color: #e3f2fd;
+        color: #0056b3;
+    }
+
+    .container {
+        max-width: 500px;
+        margin: 50px auto 0;
+    }
+
+    .card {
+        background: #ffffff;
+        border-radius: 12px;
+        box-shadow: 0px 5px 15px rgba(0, 0, 0, 0.12);
+        padding: 2rem;
+    }
+
+    .form-select, 
+    .form-control {
+        border-radius: 8px;
+        border: 1px solid #ced4da;
+        padding: 12px;
+        width: 100%;
+        font-size: 16px;
+        transition: all 0.3s ease-in-out;
+    }
+
+    .form-select:focus, 
+    .form-control:focus {
+        border-color: #28a745;
+        box-shadow: 0px 0px 8px rgba(40, 167, 69, 0.3);
+        outline: none;
+    }
+
+    .btn {
+        border-radius: 6px;
+        font-size: 16px;
+        font-weight: 600;
+        padding: 10px 24px;
+        transition: 0.3s;
+    }
+
+    .btn-success {
+        background-color: #28a745;
+        border: none;
+    }
+
+    .btn-success:hover {
+        background-color: #218838;
+    }
+
+    .btn-secondary {
+        background-color: #6c757d;
+        border: none;
+    }
+
+    .btn-secondary:hover {
+        background-color: #5a6268;
+    }
+
+    .alert {
+        border-radius: 6px;
+        padding: 12px;
+        margin-bottom: 1rem;
+        font-size: 15px;
+    }
+
+    .alert-info {
+        background-color: #e9f5f8;
+        border-color: #bee5eb;
+        color: #0c5460;
+    }
+
+    .form-label {
+        font-weight: 600;
+        margin-bottom: 0.5rem;
+    }
+
+   
+    .invalid-feedback {
+        color: #dc3545;
+        font-size: 0.875rem;
+        margin-top: 5px;
+    }
+</style>

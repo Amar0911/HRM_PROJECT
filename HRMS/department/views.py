@@ -3,14 +3,34 @@ from django.contrib import messages
 from .models import Department
 from .forms import DepartmentForm
 from django.contrib.auth.models import User
+from django.contrib.auth import get_user_model
 from django.contrib.auth import authenticate, login, logout
 from django.contrib.auth.decorators import login_required
 from roles.models import Role, UserRole
+from employee.models import Employe_User 
+from django.urls import reverse
+from .CustomAuthentication import custom_authenticate,custom_login
+from .login_required_Decorator import custom_login_required
+
+from django.contrib.auth.tokens import default_token_generator
+from django.contrib.auth.models import User
+from django.core.mail import send_mail
+from django.shortcuts import render, redirect
+from django.utils.http import urlsafe_base64_encode, urlsafe_base64_decode
+from django.utils.encoding import force_bytes, force_str
+from django.template.loader import render_to_string
+from django.http import HttpResponse
+from django.conf import settings
+from task.models import Task
+from django.views.decorators.csrf import csrf_exempt
+from task.models import TaskAssignment
 
 
 
 def index(request):
     return render(request, 'core/index.html')
+
+User = get_user_model()  # Get custom user model
 
 def register(request):
     if request.method == "POST":
@@ -37,69 +57,99 @@ def register(request):
 
 def user_login(request):
     if request.method == "POST":
-        username = request.POST['username']
-        password = request.POST['password']
-        
-        user = authenticate(request, username=username, password=password)
+        email = request.POST.get("email")  # Fetch email correctly
+        password = request.POST.get("password")
+
+        if not email:
+            print("Email is None or empty")
+            messages.error(request, "Email field is required")
+            return render(request, "core/login.html")
+
+        user = custom_authenticate(email=email, password=password)  # Authenticate using email
 
         if user is not None:
             login(request, user)
-            messages.success(request, "Login successful!")
-            if user.is_staff:
-                return redirect('department_dashboard')
-            user_role = UserRole.objects.filter(user=user).first()
-            if user_role:
-                return redirect('user_dashboard')
-            else:
-                messages.warning(request, "No role assigned. Please contact the admin.")
-                return redirect('no_role_page')  # Redirects to no_role.html
-        else:
-            messages.error(request, "Invalid username or password!")
-    
-    return render(request, 'core/login.html')
+            print(f"User Authenticated: {user.email}")
 
+            if user.is_superuser:
+                return redirect("department_dashboard")
+            else:
+                return redirect("user_dashboard")
+        else:
+            print("Authentication Failed")
+            messages.error(request, "Invalid email or password")
+
+    return render(request, "core/login.html")
 
 def user_logout(request):
     logout(request)
     return redirect('index')
 
-
-
 @login_required
 def user_dashboard(request):
-    # Check if the user has an assigned role
-    user_role = UserRole.objects.filter(user=request.user).first()
+    """Dashboard displaying users, assigned tasks, roles, and departments."""
+    user = request.user
+    employee = get_object_or_404(Employe_User, username=user.username)
 
-    if not user_role:
-        # If no role is assigned, render a page informing the user
-        return render(request, 'core/no_role.html', {'message': "No role assigned. Please contact the admin."})
+    roles = Role.objects.all()
+    departments = Department.objects.all()
+    
+    # Fetch tasks assigned to the logged-in employee
+    assigned_tasks = TaskAssignment.objects.filter(employee=employee).select_related("task")
 
-    # Fetch user permissions if a role exists
-    user_permissions = user_role.permissions.all()
-    return render(request, 'core/user_dashboard.html', {'user_role': user_role, 'user_permissions': user_permissions})
+    print(f"User Dashboard successful redirect for {user}")
 
-
+    return render(request, 'core/user_dashboard.html', {
+        "user": user,
+        "roles": roles,
+        "departments": departments,
+        "assigned_tasks": assigned_tasks
+    })
 
 # Dashboard View
 def department_dashboard(request):
-    if not request.user.is_staff:
+    user=request.user
+    print(f"{user} is user")
+    if not request.user.is_superuser:
         messages.error(request, "Access denied!")
         return redirect('index')
     departments = Department.objects.filter(status=True)
-    return render(request, 'core/dashboard.html', {'departments': departments})
 
+    department_data = []
+    for dept in departments:
+        active_employees = Employe_User.objects.filter(dept=dept, is_active=True).count()
+        inactive_employees = Employe_User.objects.filter(dept=dept, is_active=False).count()
+        department_data.append({
+            'department': dept,
+            'active_employees': active_employees,
+            'inactive_employees': inactive_employees
+        })
+
+    return render(request, 'core/dashboard.html', {
+        'department_data': department_data,
+        'departments': departments  # Added this line
+    })
+
+def department_details(request, dept_id):
+    department = get_object_or_404(Department, dept_id=dept_id)
+    roles = Role.objects.filter(department=department, status=True)
+
+    return render(request, 'core/department_detail.html', {
+        'department': department,
+        'roles': roles,
+    })
 
 
 # Create Department
 def add_department(request):
     if not request.user.is_staff:
         messages.error(request, "Access denied!")
-        return redirect('index')  # Redirect if the user is not staff
+        return redirect('index')
 
     if request.method == "POST":
         form = DepartmentForm(request.POST)
         if form.is_valid():
-            form.save()  # Directly save the department without checking existence
+            form.save()
             messages.success(request, "Department added successfully!")
             return redirect('department_dashboard')
     else:
@@ -107,47 +157,39 @@ def add_department(request):
 
     return render(request, 'core/add_department.html', {'form': form})
 
-
-
 # Update Department
-def update_department(request, id):
+def update_department(request, dept_id):
     if not request.user.is_staff:
         messages.error(request, "Access denied!")
         return redirect('index')
 
-    department = get_object_or_404(Department, id=id)
+    department = get_object_or_404(Department, dept_id=dept_id)
     if request.method == "POST":
         form = DepartmentForm(request.POST, instance=department)
         if form.is_valid():
             form.save()
             messages.success(request, "Department updated successfully!")
             return redirect('department_dashboard')
-
     else:
         form = DepartmentForm(instance=department)
 
     return render(request, 'core/update_department.html', {'form': form, 'department': department})
 
-
-
 # Soft Delete Department (Set Status to False)
-def delete_department(request, id):
+def delete_department(request, dept_id):
     if not request.user.is_staff:
         messages.error(request, "Access denied!")
         return redirect('index')
 
-    department = get_object_or_404(Department, id=id)
+    department = get_object_or_404(Department, dept_id=dept_id)
 
     if request.method == "POST":
-        department.status = False  # Soft delete
+        department.status = False
         department.save()
         messages.success(request, "Department deactivated successfully!")
         return redirect('department_dashboard')
 
     return render(request, 'core/confirm_delete.html', {'department': department})
-
-
-
 
 def no_role(request):
     return render(request, 'core/no_role.html', {'message': "No role assigned. Please contact the admin."})
@@ -210,3 +252,39 @@ def resetpassword(request, uidb64, token):
 
 def password_reset_done(request):
     return render(request, 'core/password_reset_done.html')
+
+#====================================================================================================
+
+@login_required
+def update_task_status(request, assignment_id):
+    """Handles task status updates."""
+    if request.method == "POST":
+        task_assignment = get_object_or_404(TaskAssignment, assignment_id=assignment_id)
+        new_status = request.POST.get("status")
+        task_assignment.status = new_status
+        task_assignment.save()
+        messages.success(request, "Task status updated successfully!")
+    
+    return redirect('user_dashboard')
+
+
+# ---------------------------------------------------------------------------------------------------------------------------------------------
+
+@login_required
+def profile_view(request):
+    user = request.user
+    first_name = user.first_name
+    last_name = user.last_name
+
+    initials = ""
+    if first_name and last_name:
+        initials = f"{first_name[0]}{last_name[0]}"
+    elif first_name:
+        initials = first_name[0]
+    elif last_name:
+        initials = last_name[0]
+
+    return render(request, 'core/profile.html', {'initials': initials})
+
+def all_section(request):
+    return render(request,'core/all_section.html')

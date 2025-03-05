@@ -38,7 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.messages',
     'django.contrib.staticfiles',
     'department',
-    'roles'
+    'roles',
+    'employee',
+    'task'
 ]
 
 MIDDLEWARE = [
@@ -132,7 +134,7 @@ USE_I18N = True
 
 USE_TZ = True
 
-
+AUTH_USER_MODEL = 'employee.Employe_User'
 #========================== Email Settings =================================
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

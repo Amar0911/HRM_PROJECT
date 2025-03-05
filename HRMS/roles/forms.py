@@ -1,7 +1,9 @@
 from django import forms
 from django.contrib.auth.models import User, Permission
 from .models import UserRole, Role
+from django.contrib.auth import get_user_model
 
+User = get_user_model() 
 
 class RoleForm(forms.ModelForm):
     class Meta:
@@ -18,11 +20,6 @@ class UserRoleForm(forms.ModelForm):
         label="Select User",
         widget=forms.Select(attrs={'class': 'form-control'})
     )
-    role = forms.ModelChoiceField(
-        queryset=Role.objects.all(),
-        label="Select Role",
-        widget=forms.Select(attrs={'class': 'form-control'})
-    )
     permissions = forms.ModelMultipleChoiceField(
         queryset=Permission.objects.all(),
         required=False,
@@ -31,5 +28,4 @@ class UserRoleForm(forms.ModelForm):
 
     class Meta:
         model = UserRole
-        fields = ['user', 'role', 'permissions']
-
+        fields = ['user', 'permissions']

@@ -40,7 +40,9 @@ INSTALLED_APPS = [
     'department',
     'roles',
     'employee',
-    'task'
+    'task',
+    'performance',
+    'leave',
 ]
 
 MIDDLEWARE = [
@@ -90,17 +92,23 @@ WSGI_APPLICATION = 'HRMS.wsgi.application'
 #     }
 # }
 
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'HRMS',
+#         'USER': 'root',
+#         'PASSWORD': '',
+#         'HOST': 'Localhost',  
+#         'PORT': '3307',     
+#     }
+# }
+
 DATABASES = {
     'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'HRMS',
-        'USER': 'root',
-        'PASSWORD': '',
-        'HOST': 'Localhost',  
-        'PORT': '3307',     
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
 }
-
 
 
 
@@ -135,6 +143,7 @@ USE_I18N = True
 USE_TZ = True
 
 AUTH_USER_MODEL = 'employee.Employe_User'
+
 #========================== Email Settings =================================
 
 EMAIL_BACKEND = 'django.core.mail.backends.smtp.EmailBackend'

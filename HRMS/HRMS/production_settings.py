@@ -39,6 +39,11 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'department',
     'roles',
+    'employee',
+    'task',
+    'performance',
+    'leave',
+
 ]
 
 MIDDLEWARE = [
@@ -77,16 +82,16 @@ WSGI_APPLICATION = 'HRMS.wsgi.application'
 
 
 
-DATABASES = {
-    'default': {
-        'ENGINE': 'django.db.backends.mysql',
-        'NAME': 'Amarshankargupta$hrms',
-        'USER': 'Amarshankargupta',
-        'PASSWORD': 'Asd@fgh789',
-        'HOST': 'Amarshankargupta.mysql.pythonanywhere-services.com',  
-        'PORT': '3306',     
-    }
-}
+# DATABASES = {
+#     'default': {
+#         'ENGINE': 'django.db.backends.mysql',
+#         'NAME': 'Amarshankargupta$hrms',
+#         'USER': 'Amarshankargupta',
+#         'PASSWORD': 'Asd@fgh789',
+#         'HOST': 'Amarshankargupta.mysql.pythonanywhere-services.com',  
+#         'PORT': '3306',     
+#     }
+# }
 
 
 

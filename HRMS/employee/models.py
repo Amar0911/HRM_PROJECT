@@ -32,7 +32,7 @@ class Employe_User(AbstractUser):
     def save(self, *args, **kwargs):
         if not self.reporting_manager:
             Role = apps.get_model("roles", "Role")  # ✅ Fetch Role dynamically
-            Employe_User = apps.get_model("employe", "Employe_User")  # ✅ Fetch Employe_User dynamically
+            Employe_User = apps.get_model("employee", "Employe_User")  # ✅ Fetch Employe_User dynamically
             
             hr_admin = Employe_User.objects.filter(role__role_name="HR").first()
             self.reporting_manager = hr_admin if hr_admin else None

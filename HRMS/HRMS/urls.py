@@ -22,4 +22,7 @@ urlpatterns = [
     path('',include('department.urls')),
     path('roles/',include('roles.urls')),
     path('employee/',include('employee.urls')),
+    path('leave/',include('leave.urls')),
+    path('performance/',include('performance.urls')),
+    path('task/',include('task.urls')),
 ]
